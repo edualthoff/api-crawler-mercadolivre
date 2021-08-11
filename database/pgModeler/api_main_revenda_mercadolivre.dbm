@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2" last-position="0,0" last-zoom="1.05" max-obj-count="14"
+	 default-schema="public" default-owner="postgres">
+<database name="db_principal" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="tb_pessoa" layer="0" collapse-mode="2" max-obj-count="12">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="500" y="540"/>
+	<column name="pessoa_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="text" length="60"/>
+	</column>
+	<column name="sobrenome">
+		<type name="text" length="100"/>
+	</column>
+	<column name="data_nascimento">
+		<type name="date" length="0"/>
+	</column>
+	<column name="sexo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="cpf">
+		<type name="text" length="0"/>
+	</column>
+	<column name="data_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="data_update">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="email">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="tb_pessoa_pk" type="pk-constr" table="public.tb_pessoa">
+		<columns names="pessoa_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="tb_usuario" layer="0" collapse-mode="2" max-obj-count="10">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="420"/>
+	<column name="usuario_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="email" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="password" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="verificado" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="data_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="data_update">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="user_ativo" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="tb_usuario_pk" type="pk-constr" table="public.tb_usuario">
+		<columns names="usuario_id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="pessoa_id_tb_pessoa" index="7"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tb_pessoa_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="tb_auth_roles" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="720"/>
+	<column name="auth_roles" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="usuario_id_tb_usuario" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="tb_auth_roles_pk" index="0"/>
+		<object name="tb_usuario_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="tb_usuario_tb_auth_roles" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#af1f89"
+	 src-table="public.tb_usuario"
+	 dst-table="public.tb_auth_roles"
+	 src-required="true" dst-required="false">
+	<label ref-type="name-label">
+		<position x="71.3874" y="14.8143"/>
+	</label>
+	<constraint name="auth_roles_pk" type="pk-constr" table="public.tb_auth_roles">
+		<columns names="auth_roles" ref-type="src-columns"/>
+	</constraint>
+	<special-pk-cols indexes="0"/>
+</relationship>
+
+<table name="tb_telefone" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="460" y="240"/>
+	<column name="telefone_id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="numero" not-null="true">
+		<type name="numeric" length="0"/>
+	</column>
+	<column name="tipo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="preferencia" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="verificado" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="tb_telefone_pk" type="pk-constr" table="public.tb_telefone">
+		<columns names="telefone_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="tb_pessoa_tb_telefone" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#882006"
+	 src-table="public.tb_pessoa"
+	 dst-table="public.tb_telefone"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="28.6141" y="5.91434"/>
+	</label>
+</relationship>
+
+<table name="tb_codigo_cadastro" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<appended-sql><![CDATA[INSERT INTO public.tb_codigo_cadastro (
+codigo_gerado,condicao,data_created,usuario_id) VALUES 
+('mercadolivre',true,current_timestamp,null);]]></appended-sql>
+	<position x="160" y="40"/>
+	<column name="codigo_id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="codigo_gerado" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="condicao" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="data_created" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="data_expired">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="usuario_id">
+		<type name="bigint" length="0"/>
+	</column>
+	<constraint name="tb_codigo_cadastro_pk" type="pk-constr" table="public.tb_codigo_cadastro">
+		<columns names="codigo_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="tb_usuario_tb_pessoa" type="rel11" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#52b802"
+	 src-table="public.tb_pessoa"
+	 dst-table="public.tb_usuario"
+	 src-required="true" dst-required="false"/>
+
+<table name="tb_modulo" layer="0" collapse-mode="2" max-obj-count="2">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<appended-sql><![CDATA[INSERT INTO public.tb_modulo (nome) VALUES ('mercadolivre');]]></appended-sql>
+	<position x="0" y="240"/>
+	<column name="modulo_id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="tb_modulo_pk" type="pk-constr" table="public.tb_modulo">
+		<columns names="modulo_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="tb_codigo_cadastro_tb_modulo" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#3ff1fb"
+	 src-table="public.tb_codigo_cadastro"
+	 dst-table="public.tb_modulo"
+	 src-required="false" dst-required="false"
+	 table-name="tb_codigo_cadastro_tb_modulo">
+	<label ref-type="name-label">
+		<position x="14.0061" y="-7.08816"/>
+	</label>
+</relationship>
+
+<relationship name="tb_usuario_tb_modulo" type="relnn" layer="0"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#509fe0"
+	 src-table="public.tb_usuario"
+	 dst-table="public.tb_modulo"
+	 src-required="false" dst-required="false"
+	 table-name="tb_usuario_tb_modulo">
+	<label ref-type="name-label">
+		<position x="9.34197" y="-22.0857"/>
+	</label>
+</relationship>
+
+<table name="pr_marca" layer="0" collapse-mode="2" max-obj-count="6">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="840" y="400"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="date_modified">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pr_marca_pk" type="pk-constr" table="public.pr_marca">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="pr_categoria" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1080" y="400"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="nome" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="date_modified">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pr_categoria_pk" type="pk-constr" table="public.pr_categoria">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="pr_item" layer="0" collapse-mode="2" max-obj-count="10">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="960" y="60"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="modelo" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="descricao">
+		<type name="text" length="0"/>
+	</column>
+	<column name="status">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="date_modified">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pr_item_pk" type="pk-constr" table="public.pr_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_pr_categoria" index="8"/>
+		<object name="id_pr_marca" index="7"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="pr_categoria_fk" index="1"/>
+		<object name="pr_marca_fk" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="pr_marca_has_many_pr_item" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d965f0"
+	 src-table="public.pr_marca"
+	 dst-table="public.pr_item"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-26.9915" y="-6.78566"/>
+	</label>
+</relationship>
+
+<relationship name="pr_categoria_has_many_pr_item" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#c5cf4e"
+	 src-table="public.pr_categoria"
+	 dst-table="public.pr_item"
+	 src-required="false" dst-required="false"/>
+
+<table name="crw_busca" layer="0" collapse-mode="2" max-obj-count="19">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1380" y="120"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="link_url" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="descricao">
+		<type name="text" length="0"/>
+	</column>
+	<column name="range_inicial">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="range_final">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="status">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="error_link">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="condicao_produto">
+		<type name="text" length="0"/>
+	</column>
+	<column name="scheduling_time">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="hora">
+		<type name="numeric" length="0"/>
+	</column>
+	<column name="minuto">
+		<type name="numeric" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="date_modified">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="site_base">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="crw_busca_pk" type="pk-constr" table="public.crw_busca">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_pr_item" index="15"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="pr_item_fk" index="0"/>
+	</customidxs>
+</table>
+
+<relationship name="pr_item_has_many_pr_busca_crawler" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#e9ed32"
+	 src-table="public.pr_item"
+	 dst-table="public.crw_busca"
+	 src-required="false" dst-required="false"/>
+
+<table name="crw_item" layer="0" collapse-mode="2" max-obj-count="14">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="880" y="600"/>
+	<column name="id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="origem" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="link_url" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<column name="descricao">
+		<type name="text" length="0"/>
+	</column>
+	<column name="titulo">
+		<type name="text" length="0"/>
+	</column>
+	<column name="valor">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="condicao">
+		<type name="text" length="0"/>
+	</column>
+	<column name="cidade">
+		<type name="text" length="0"/>
+	</column>
+	<column name="tipo_anuncio">
+		<type name="text" length="0"/>
+	</column>
+	<column name="ativo">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="date_modified">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_created">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="crw_item_pk" type="pk-constr" table="public.crw_item">
+		<columns names="id,origem" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="crw_busca_item" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1380" y="620"/>
+	<column name="id" not-null="true">
+		<type name="bigserial" length="0"/>
+	</column>
+	<column name="ativo" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="tenant_id" not-null="true">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="crw_busca_item_pk" type="pk-constr" table="public.crw_busca_item">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_crw_busca" index="4"/>
+		<object name="id_crw_item" index="3"/>
+		<object name="origem_crw_item" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="crw_busca_fk" index="0"/>
+		<object name="crw_item_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="pr_busca_crawler_has_many_crw_item_tenant" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#3b1650"
+	 src-table="public.crw_busca"
+	 dst-table="public.crw_busca_item"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="-3.0165" y="-4.98566"/>
+	</label>
+</relationship>
+
+<relationship name="crw_item_has_many_crw_item_tenant" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#f46a93"
+	 src-table="public.crw_item"
+	 dst-table="public.crw_busca_item"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="5.0025" y="8.13497"/>
+	</label>
+</relationship>
+
+<index name="scheduling_time" table="public.crw_busca"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="scheduling_time"/>
+		</idxelement>
+</index>
+
+<index name="ativo" table="public.crw_busca_item"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="ativo"/>
+		</idxelement>
+</index>
+
+<index name="tenant_id" table="public.crw_busca_item"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="tenant_id"/>
+		</idxelement>
+</index>
+
+<index name="tenant_id" table="public.crw_busca"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="tenant_id"/>
+		</idxelement>
+</index>
+
+</dbmodel>
