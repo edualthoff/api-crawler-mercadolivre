@@ -1,0 +1,29 @@
+spring:  
+ application:
+  name: gateway-service
+ cloud:
+  config:   enabled: false
+  consul:
+   enabled: true
+   host: consul-leader
+   port: 8500
+   config:
+    fail-fast: false 
+    enabled: true
+    format: YAML
+    #prefix: config/api-gateway-service
+    data-key: data
+    watch:
+     enabled: true
+   # discovery:
+    # enabled: true
+    # healthCheckPath: /health-check
+    # register: false
+    # healthCheckInterval: 300s
+    # instance-id: "${spring.cloud.client.hostname}:${spring.application.name}:${random.int[1,999999]}"
+server:  address: 0.0.0.0
+  
+springdoc:
+  packagesToScan: 
+
+  
