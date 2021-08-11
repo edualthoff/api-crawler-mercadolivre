@@ -1,0 +1,25 @@
+spring:  
+  application:
+    name: api-revenda-service
+  cloud:
+   consul:
+    enabled: true
+    host: consul-leader
+    port: 8500
+    config:
+     enabled: true
+     format: YAML
+     #prefix: config
+     data-key: data     watch:      enabled: true
+     #discovery:
+      #enabled: true
+      # healthCheckPath: /health-check
+      #include-hostname-in-instance-id: true
+     # healthCheckInterval: 300s
+     # instance-id: "${spring.application.name}:${server.address}:${server.port}:${random.int[1,999999]}"
+
+server: port: 0
+
+springdoc:
+  packagesToScan: br.api.rev
+     

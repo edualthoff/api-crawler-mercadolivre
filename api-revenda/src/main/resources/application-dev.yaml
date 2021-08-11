@@ -1,0 +1,49 @@
+## Server Properties
+server:
+ #port: 8443
+ port: 8083
+ error: 
+  whitelabel:
+   enabled: false
+
+keycloak:
+ realm: revenda-certa
+ auth-server-url: http://localhost/auth
+ ssl-required: 'none'
+ resource: api-revenda-certa
+ credentials:
+  secret: 90a28542-03b7-4395-ad0e-058ec4f9b866
+ use-resource-role-mappings: false
+ bearer-only: false
+ enabled: true
+ 
+## Banco de Dados App - Postgresql
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+ profiles: dev
+ main: 
+  allow-bean-definition-overriding: true
+ application:
+    name: api-revenda
+ jpa.open-in-view: false
+ resources:
+  add-mappings: false
+ jpa:
+  # Show or not log for each sql query
+  show-sql: true
+  open-in-view: false
+  properties:
+   # Hibernate Properties
+   hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    ddl-auto: update
+    show_sql: true
+    format_sql: true
+# Banco de dados APP
+ datasource:
+  url: jdbc:postgresql://localhost:5435/db_principal?currentSchema=public&useSSL=false
+  username: postgres
+  password: admin
+  driverClassName: org.postgresql.Driver
+  initialization-mode: always

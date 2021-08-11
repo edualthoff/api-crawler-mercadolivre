@@ -1,0 +1,69 @@
+keycloak:
+ realm: revenda-certa
+ auth-server-url: http://localhost/auth
+ ssl-required: 'none'
+ resource: api-revenda-certa
+ credentials:
+  secret: 90a28542-03b7-4395-ad0e-058ec4f9b866
+ use-resource-role-mappings: false
+ bearer-only: false
+ enabled: true
+ 
+## Banco de Dados App - Postgresql
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+ main: 
+  allow-bean-definition-overriding: true
+ application:
+    name: api-revenda-service
+ cloud:
+  consul:
+   discovery:
+    enabled: true
+    ## serviceName: api-revenda-service
+    ## health-check-path: ${management.server.servlet.context-path}/health
+    ## port: ${management.server.port}
+    ## management-port: ${management.server.port}
+    ## include-hostname-in-instance-id: true
+    healthCheckInterval: 180s
+    #instance-id: "${spring.application.name}:${api-revenda-service}:${server.port}:${random.int[1,999999]}"
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+ jpa.open-in-view: false
+ resources:
+  add-mappings: false
+ jpa:
+  # Show or not log for each sql query
+  show-sql: true
+  open-in-view: false
+  properties:
+   # Hibernate Properties
+   hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    ddl-auto: update
+    show_sql: true
+    format_sql: true
+  # Banco de dados APP
+ datasource:
+  url: jdbc:postgresql://localhost:5432/db_principal?currentSchema=public&useSSL=false
+  username: springpost
+  password: iCEcTeRYS
+  driverClassName: org.postgresql.Driver
+  initialization-mode: always
+  
+# Actuator - Coleta de erros, trace e etc
+management:
+ security:
+  enabled: false
+ server:
+  address: 0.0.0.0
+  port: 8000
+ ##  servlet: 
+  ##  context-path: /actuator
+  ssl:
+   enabled: false
+api:
+  sendreport:
+    uri: www.repor.com.br
+  version: 2.0
+  

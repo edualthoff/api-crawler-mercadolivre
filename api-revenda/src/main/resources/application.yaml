@@ -1,0 +1,62 @@
+
+server:
+ address: 0.0.0.0
+ port: 8084
+ 
+keycloak:
+ realm: revenda-certa
+ auth-server-url: http://host.docker.internal:8080/auth
+ ssl-required: 'none'
+ resource: api-revenda-certa
+ credentials:
+  secret: fc86c65e-f9aa-43ce-983d-68c653bedb27
+ use-resource-role-mappings: false
+ bearer-only: false
+ enabled: true
+ 
+## Banco de Dados App - Postgresql
+## Spring DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+spring:
+ main: 
+  allow-bean-definition-overriding: true
+ application:
+    name: api-revenda-service
+ jpa.open-in-view: false
+ resources:
+  add-mappings: false
+ jpa:
+  # Show or not log for each sql query
+  show-sql: true
+  open-in-view: false
+  properties:
+   # Hibernate Properties
+   hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    ddl-auto: update
+    show_sql: false
+    format_sql: true
+  # Banco de dados APP
+ datasource:
+  url: jdbc:postgresql://postgres-spring:5432/db_principal?currentSchema=public&useSSL=false
+  username: springpost
+  password: iCEcTeRYS
+  driverClassName: org.postgresql.Driver
+  initialization-mode: always
+  
+# Actuator - Coleta de erros, trace e etc
+management:
+ security:
+  enabled: false
+ server:
+  address: 0.0.0.0
+  port: 8000
+ ##  servlet: 
+  ##  context-path: /actuator
+  ssl:
+   enabled: false
+api:
+  sendreport:
+    uri: www.repor.com.br
+  version: 2.0
+  
