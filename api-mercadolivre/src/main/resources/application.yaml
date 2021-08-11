@@ -1,0 +1,122 @@
+## Api Mercadolivre service
+
+## Server Properties
+server:
+ address: 0.0.0.0
+ port: 8083
+ forward-headers-strategy: native
+ tomcat:
+    accesslog:
+      request-attributes-enabled: true
+ #tomcat:
+    #use-relative-redirects: true
+    #remoteip:
+     # host-header: X-Forwarded-Host
+      #protocol-header: x-forwarded-proto
+      #remote-ip-header: x-forwarded-for
+ 
+## Keycloak Configurar
+keycloak:
+ realm: revenda-certa
+ auth-server-url: https://auth.revendacerta.com.br/auth
+ #confidential-port: 8443
+ #auth-server-url: http://host.docker.internal:8080/auth
+ #auth-server-url: http://keycloak:8080/auth
+ ssl-required: none
+ resource: api-mercadolivre-service
+ credentials:
+  secret: 839b2ae6-90da-4711-912f-f2ef7a71f723
+ use-resource-role-mappings: false
+ bearer-only: true
+ enabled: true
+ #cors: true
+ 
+spring:
+ application:
+  name: api-mercadolivre-service
+ mail:
+  host: smtp.gmail.com
+  port: 465
+  username: revendascerta@gmail.com
+  password: edu5521d
+  properties:
+   mail:
+    smtp:
+     auth: true
+     port: 465
+     host: smtp.gmail.com
+     connectiontimeout: 5000
+     timeout: 5000
+     writetimeout: 5000
+     ssl: 
+      enable: true
+     starttls:
+      required: true
+      enable: true
+     socketFactory:
+      port: 465
+      fallback: false
+      class: javax.net.ssl.SSLSocketFactory
+ jpa.open-in-view: false
+ resources:
+  add-mappings: false
+ jpa:
+  # Show or not log for each sql query
+  show-sql: true
+  open-in-view: false
+  properties:
+   # Hibernate Properties
+   hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Hibernate ddl auto (create, create-drop, validate, update)
+    ddl-auto: update
+    show_sql: false
+    format_sql: true
+  # Banco de dados APP
+ datasource:
+  url: jdbc:postgresql://postgres-spring:5432/db_principal?currentSchema=public&useSSL=false
+  username: springpost
+  password: iCEcTeRYS
+  driverClassName: org.postgresql.Driver
+  initialization-mode: always
+
+# Actuator - Coleta de erros, trace e etc
+management:
+ security:
+  enabled: false
+ server:
+  address: 0.0.0.0
+  port: 8000
+ ##  servlet: 
+  ##  context-path: /actuator
+  ssl:
+   enabled: false
+   
+## Config Custom Class ElasticSearch
+##elastich:
+ ##rest:
+  ##uris: elastic-master
+  #uris: localhost
+  ##port: 9200
+  ##username: admin
+  ##password: admin
+# Banco de dados APP
+
+  
+ #date:
+  #format:
+  # br-sp: uuuu-MM-dd'T'HH:mm:ss+0300 
+   
+## Custom Propriedade
+## WebDriver - Selenium Crawler
+webdriver:
+  windows:
+   firefox: webdriver\\windows\\geckodriver.exe
+  linux:
+   firefox: webdriver//linux//geckodriver
+    
+api:
+  sendreport:
+    uri: www.repor.com.br
+  version: 2.0
+  

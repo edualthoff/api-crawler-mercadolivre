@@ -1,0 +1,112 @@
+## Api Mercadolivre service
+
+## Server Properties
+server:
+ address: 0.0.0.0 tomcat:    accesslog:      request-attributes-enabled: true
+
+
+
+logging:
+  level:
+    org:
+     springframework:
+      #root: DEBUG
+      security: DEBUG
+      web: DEBUG
+      #boot: DEBUG
+      cloud: DEBUG
+      #integration: DEBUG 
+      mvc:
+       log-request-details: DEBUG
+## Keycloak Configurar
+keycloak:
+ realm: api-mercadolivre-service
+ auth-server-url: http://host.docker.internal:8080/auth
+ ssl-required: none
+ resource: api-mercadolivre-service
+ credentials:
+  secret: 8276d3d4-19ea-49ee-ba65-65b1549a82d0
+ use-resource-role-mappings: false
+ bearer-only: true
+ enabled: true
+ cors: true
+ 
+spring:
+ application:
+  name: api-mercadolivre-service
+ cloud:
+  consul:
+   discovery:
+    enabled: false
+    ## serviceName: api-revenda-service
+    ## health-check-path: ${management.server.servlet.context-path}/health
+    ## port: ${management.server.port}
+    ## management-port: ${management.server.port}
+    ## include-hostname-in-instance-id: true
+    healthCheckInterval: 180s
+    #instance-id: "${spring.application.name}:${api-revenda-service}:${server.port}:${random.int[1,999999]}"
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+ mail:
+  host: smtp.gmail.com
+  port: 465
+  username: revendascerta@gmail.com
+  password: edu5521d
+  properties:
+   mail:
+    smtp:
+     auth: true
+     port: 465
+     host: smtp.gmail.com
+     connectiontimeout: 5000
+     timeout: 5000
+     writetimeout: 5000
+     ssl: 
+      enable: true
+     starttls:
+      required: true
+      enable: true
+     socketFactory:
+      port: 465
+      fallback: false
+      class: javax.net.ssl.SSLSocketFactory
+ data:
+   elasticsearch:
+    repositories:
+     enabled: true 
+
+
+# Actuator - Coleta de erros, trace e etc
+management:
+ server:
+  address: host.docker.internal
+  port: 8000
+ ##  servlet: 
+  ##  context-path: /actuator
+  ssl:
+   enabled: false
+
+## Config Custom Class ElasticSearch
+elastich:
+ rest:
+  uris: host.docker.internal
+  port: 9200
+  username: admin
+  password: admin
+  
+ #date:
+  #format:
+  # br-sp: uuuu-MM-dd'T'HH:mm:ss+0300 
+   
+## Custom Propriedade
+## WebDriver - Selenium Crawler
+webdriver:
+  windows:
+   firefox: webdriver\\windows\\geckodriver.exe
+  linux:
+   firefox: webdriver//linux//geckodriver
+    
+api:
+  sendreport:
+    uri: www.repor.com.br
+  version: 2.0
+  
